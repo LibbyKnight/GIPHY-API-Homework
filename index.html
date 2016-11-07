@@ -70,7 +70,7 @@
 
 	$('button').on('click', function() {
 		var p = $(this).data('searchinput'); //what goes here?
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + p + themes +"&api_key=dc6zaTOxFJmzC&limit=10";
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + p + themes + "&api_key=dc6zaTOxFJmzC&limit=10";
         console.log('button' + "its clicked");
 
         $.ajax({ url: queryURL, method: 'GET'})
