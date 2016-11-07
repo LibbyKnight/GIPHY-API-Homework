@@ -22,8 +22,11 @@
     <label for="searchinput">Add a theme</label>
     <input type="text" id="searchinput"><br>
 
+
     <input id="addtheme" type="submit" value="Submit">
+    Powered By Giphy
     </form>
+
 
     <div id="gifs">
     </div>
@@ -35,74 +38,72 @@
 
 	var themes = ['Rainbow Dash', 'Spongebob', 'Vault Boy', 'Dory', 'Elsa', 'Patrick Star', 'Ariel', 'Mr. Krabs', 'Heman', 'Doge', 'Nyan Cat', 'Harry Potter', 'Nickelodeon', 'Power Rangers', '90s', 'Twilight Sparkle', 'Doctor Who', 'Kirby', 'Lego Movie', 'Pinkie Pie'];
 
-	// ========================================================
-
-	// Generic function for displaying movie data 
 	function renderButtons(){ 
 
-			// Deletes the themes prior to adding new themes (this is necessary otherwise you will have repeat buttons)
+			$('#themesButtons').empty();		
 
-		// $('#themesView').html ('');	
-		$('#themesButtons').empty();		
-
-		// Loops through the array of themes
+		
 		for (var i = 0; i< themes.length; i++) {
 			themes[i];
 			var button = $('<button>');
-			button.addClass('movie');
+			button.addClass('theme');
 			button.text(themes[i]);
 			$('#themesButtons').append(button);
 		}
 	}
 
 	renderButtons();
-	// This function handles events where one button is clicked
+	
 	$('#addtheme').on('click', function(){
 
-		// This line of code will grab the input from the textbox
+		
 		var input = $('#searchinput').val();
 		console.log(input);
-
-		// The movie from the textbox is then added to our array
-		themes.push(input);
 		
-		// Our array then runs which handles the processing of our movie array
+		themes.push(input);
+	
 		renderButtons();
 
-
-		// We have this line so that users can hit "enter" instead of clicking on ht button and it won't move to the next page
 		return false;
 
 	})
 
 	$('button').on('click', function() {
 		var p = $(this).data('searchinput'); //what goes here?
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + p + "&api_key=dc6zaTOxFJmzC&limit=10";
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + p + themes +"&api_key=dc6zaTOxFJmzC&limit=10";
+        console.log('button' + "its clicked");
 
         $.ajax({ url: queryURL, method: 'GET'})
 
             .done(function(response) {
-                
-                 var imageUrl = response.data.image_original_url;
 
-   var rating = results[i].rating;
+            	var results = response.data;
 
-                    var p = $('<p>').text("Rating: " + rating);
-                // 
-                var catImage = $("<img>");
+            	for (var i = 0; i < results.length; i++) {
                 
-                //getting the img url   
+                var gifDiv = $('<div class="item">');
+                
+                var imageUrl = response.data.image_original_url;
+
+   				var rating = results[i].rating;
+
+                var p = $('<p>').text("Rating: " + rating);
+                 
+                var themeGif = $("<img>");
+
+                
+                themeGif.attr('src', results[i].images.fixed_height.url);   
                 gifDiv.attr('src', imageUrl);
-                gifDiv.attr('alt', 'cat image');
+                gifDiv.append(p)
+                gifDiv.append(themeGif)
 
             
                     $('#gifs').prepend(gifDiv);
-                });
+                };
+            });
 			});
 
        
-
-
 </script>
 
 </body>
