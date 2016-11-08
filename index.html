@@ -35,8 +35,11 @@
 <script type="text/javascript">
 
 
+	// do I need $(document).ready(function()?
 
-	var themes = ['Rainbow Dash', 'Spongebob', 'Vault Boy', 'Dory', 'Elsa', 'Patrick Star', 'Ariel', 'Mr. Krabs', 'Heman', 'Doge', 'Nyan Cat', 'Harry Potter', 'Nickelodeon', 'Power Rangers', '90s', 'Twilight Sparkle', 'Doctor Who', 'Kirby', 'Lego Movie', 'Pinkie Pie'];
+
+	var themes = ['Rainbow Dash', 'Spongebob', 'Vault Boy', 'Dory', 'Elsa', 'Patrick Star', 'Ariel', 'Mr. Krabs', 'Heman', 'Doge', 'Nyan Cat', 'Harry Potter', 'Nickelodeon', 'Power Rangers', '90s', 'Twilight Sparkle', 'Doctor Who', 'Kirby', 'Lego Movie', 'Pinkie Pie']; 
+	// do i need a blank space for the new items?
 
 	function renderButtons(){ 
 
@@ -50,6 +53,50 @@
 			button.text(themes[i]);
 			$('#themesButtons').append(button);
 		}
+
+		$('button').on('click', function() {
+		
+		var p = $('#searchinput').val().trim();
+	
+		 console.log(p);
+
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + p +  "&api_key=dc6zaTOxFJmzC&rating&limit=10";
+        console.log('button'  + "its clicked");
+        console.log(queryURL);
+
+        $.ajax({ url: queryURL, method: 'GET'})
+
+            .done(function(response) {
+
+            	var results = response.data;
+
+            	for (var i = 0; i < results.length; i++) {
+                
+                               
+                var imageUrl = results[i].images.fixed_height_still.url;
+                console.log(imageUrl);
+
+   				var rating = results[i].rating;
+
+                var p = $('<p>').text("Rating: " + rating);
+                 
+                var themeGif = $("<img>");
+
+                themeGif.attr('src', imageUrl);
+              
+                var gifDiv = $('<div class="item">').append(p).append(themeGif);
+
+                $('#gifs').append(gifDiv);
+
+            	
+                    
+                };
+            });
+            $('<img>').on('click', function() {
+
+            		$(imgUrl).attr(results[i].images.fixed_height.url);
+		})
+		});
 	}
 
 	renderButtons();
@@ -57,7 +104,7 @@
 	$('#addtheme').on('click', function(){
 
 		
-		var input = $('#searchinput').val();
+		var input = $('#searchinput').val().trim();
 		console.log(input);
 		
 		themes.push(input);
@@ -69,9 +116,14 @@
 	})
 
 	$('button').on('click', function() {
-		var p = $(this).data('searchinput'); //what goes here?
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + p + themes + "&api_key=dc6zaTOxFJmzC&limit=10";
-        console.log('button' + "its clicked");
+		
+		var p = $('#searchinput').val().trim();
+	
+		 console.log(p);
+
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + p +  "&api_key=dc6zaTOxFJmzC&rating&limit=10";
+        console.log('button'  + "its clicked");
+        console.log(queryURL);
 
         $.ajax({ url: queryURL, method: 'GET'})
 
@@ -92,7 +144,7 @@
                 var themeGif = $("<img>");
 
                 
-                themeGif.attr('src', results[i].images.fixed_height.url);   
+                // themeGif.attr('src', results[i].images.fixed_height.url);   
                 gifDiv.attr('src', imageUrl);
                 gifDiv.append(p)
                 gifDiv.append(themeGif)
