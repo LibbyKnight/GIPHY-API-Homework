@@ -56,7 +56,7 @@
 
 		$('button').on('click', function() {
 		
-		var p = $('#searchinput').val().trim();
+		var p = $('#searchinput').val().trim(); //i think this is where its getting the value only from the input. i thought i could put the button div here "themesButtons" instead so that it reads both?
 	
 		 console.log(p);
 
@@ -88,20 +88,16 @@
 
                 $('#gifs').append(gifDiv);
 
-            	
-                    
-                };
-            });
-            $('<img>').on('click', function() {
 
-            		$(imgUrl).attr(results[i].images.fixed_height.url);
-		})
+                };
+
+            });
 		});
 	}
 
 	renderButtons();
 	
-	$('#addtheme').on('click', function(){
+		$('#addtheme').on('click', function(){
 
 		
 		var input = $('#searchinput').val().trim();
@@ -114,46 +110,6 @@
 		return false;
 
 	})
-
-	$('button').on('click', function() {
-		
-		var p = $('#searchinput').val().trim();
-	
-		 console.log(p);
-
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + p +  "&api_key=dc6zaTOxFJmzC&rating&limit=10";
-        console.log('button'  + "its clicked");
-        console.log(queryURL);
-
-        $.ajax({ url: queryURL, method: 'GET'})
-
-            .done(function(response) {
-
-            	var results = response.data;
-
-            	for (var i = 0; i < results.length; i++) {
-                
-                var gifDiv = $('<div class="item">');
-                
-                var imageUrl = response.data.image_original_url;
-
-   				var rating = results[i].rating;
-
-                var p = $('<p>').text("Rating: " + rating);
-                 
-                var themeGif = $("<img>");
-
-                
-                // themeGif.attr('src', results[i].images.fixed_height.url);   
-                gifDiv.attr('src', imageUrl);
-                gifDiv.append(p)
-                gifDiv.append(themeGif)
-
-            
-                    $('#gifs').prepend(gifDiv);
-                };
-            });
-			});
 
        
 </script>
