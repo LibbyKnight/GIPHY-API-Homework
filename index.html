@@ -38,9 +38,7 @@
 	var themes = ['Rainbow Dash', 'Spongebob', 'Vault Boy', 'Dory', 'Elsa', 'Patrick Star', 'Ariel', 'Mr. Krabs', 'Heman', 'Doge', 'Nyan Cat', 'Harry Potter', 'Nickelodeon', 'Power Rangers', '90s', 'Twilight Sparkle', 'Doctor Who', 'Kirby', 'Lego Movie', 'Pinkie Pie']; 
 	
 
-	function defineP() {
-
-		var p;
+			var p;
 
 			 $('button').on('click', function() {
 		
@@ -76,7 +74,9 @@
         console.log('button'  + "its clicked");
         console.log(queryURL);
 
-        $.ajax({ url: queryURL, method: 'GET'})
+        function ajaxCall() {
+
+        	$.ajax({ url: queryURL, method: 'GET'})
 
             .done(function(response) {
 
@@ -104,7 +104,7 @@
                 };
 
             });
-
+}
            
 	renderButtons();
 	
@@ -122,7 +122,7 @@
 
 	})
 
-}
+
        
 </script>
 
