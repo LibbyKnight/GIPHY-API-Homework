@@ -35,11 +35,26 @@
 <script type="text/javascript">
 
 
-	// do I need $(document).ready(function()?
-
-
 	var themes = ['Rainbow Dash', 'Spongebob', 'Vault Boy', 'Dory', 'Elsa', 'Patrick Star', 'Ariel', 'Mr. Krabs', 'Heman', 'Doge', 'Nyan Cat', 'Harry Potter', 'Nickelodeon', 'Power Rangers', '90s', 'Twilight Sparkle', 'Doctor Who', 'Kirby', 'Lego Movie', 'Pinkie Pie']; 
-	// do i need a blank space for the new items?
+	
+
+	function defineP() {
+
+		var p;
+
+			 $('button').on('click', function() {
+		
+			p = $('#searchinput').val().trim(); 
+			 console.log(p);
+		});
+
+			$('themesButtons').on('click', function() {
+
+			p = $('themes').data();
+			 console.log(p);
+		});
+
+		
 
 	function renderButtons(){ 
 
@@ -53,14 +68,11 @@
 			button.text(themes[i]);
 			$('#themesButtons').append(button);
 		}
-
-		$('button').on('click', function() {
+}
 		
-		var p = $('#searchinput').val().trim(); //i think this is where its getting the value only from the input. i thought i could put the button div here "themesButtons" instead so that it reads both?
 	
-		 console.log(p);
+		var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + p +  "&api_key=dc6zaTOxFJmzC&rating&limit=10";
 
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + p +  "&api_key=dc6zaTOxFJmzC&rating&limit=10";
         console.log('button'  + "its clicked");
         console.log(queryURL);
 
@@ -92,9 +104,8 @@
                 };
 
             });
-		});
-	}
 
+           
 	renderButtons();
 	
 		$('#addtheme').on('click', function(){
@@ -111,6 +122,7 @@
 
 	})
 
+}
        
 </script>
 
