@@ -34,81 +34,12 @@
 <script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
 <script type="text/javascript">
 
-
+	var p;
 	var themes = ['Rainbow Dash', 'Spongebob', 'Vault Boy', 'Dory', 'Elsa', 'Patrick Star', 'Ariel', 'Mr. Krabs', 'Heman', 'Doge', 'Nyan Cat', 'Harry Potter', 'Nickelodeon', 'Power Rangers', '90s', 'Twilight Sparkle', 'Doctor Who', 'Kirby', 'Lego Movie', 'Pinkie Pie']; 
 	
-
-			var p;
-
-			 $('button').on('click', function() {
-		
-			p = $('#searchinput').val().trim(); 
-			 console.log(p);
-		});
-
-			$('themesButtons').on('click', function() {
-
-			p = $('themes').data();
-			 console.log(p);
-		});
-
-		
-
-	function renderButtons(){ 
-
-			$('#themesButtons').empty();		
-
-		
-		for (var i = 0; i< themes.length; i++) {
-			themes[i];
-			var button = $('<button>');
-			button.addClass('theme');
-			button.text(themes[i]);
-			$('#themesButtons').append(button);
-		}
-}
-		
-	
-		var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + p +  "&api_key=dc6zaTOxFJmzC&rating&limit=10";
-
-        console.log('button'  + "its clicked");
-        console.log(queryURL);
-
-        function ajaxCall() {
-
-        	$.ajax({ url: queryURL, method: 'GET'})
-
-            .done(function(response) {
-
-            	var results = response.data;
-
-            	for (var i = 0; i < results.length; i++) {
-                
-                               
-                var imageUrl = results[i].images.fixed_height_still.url;
-                console.log(imageUrl);
-
-   				var rating = results[i].rating;
-
-                var p = $('<p>').text("Rating: " + rating);
-                 
-                var themeGif = $("<img>");
-
-                themeGif.attr('src', imageUrl);
-              
-                var gifDiv = $('<div class="item">').append(p).append(themeGif);
-
-                $('#gifs').append(gifDiv);
-
-
-                };
-
-            });
-}
-           
 	renderButtons();
-	
-		$('#addtheme').on('click', function(){
+
+	$('#addtheme').on('click', function(){
 
 		
 		var input = $('#searchinput').val().trim();
@@ -118,9 +49,83 @@
 	
 		renderButtons();
 
+		
 		return false;
 
-	})
+	});
+
+	$('.theme').on('click', function() {
+
+		p = $(this).text();
+		getResults(p);
+
+
+	});
+
+
+	function renderButtons(){ 
+
+		$('#themesButtons').empty();		
+
+			
+		for (var i = 0; i< themes.length; i++) {
+			themes[i];
+			var button = $('<button>');
+			button.addClass('theme');
+			button.text(themes[i]);
+			$('#themesButtons').append(button);
+			
+
+		}
+	}
+		
+	
+		function getResults(query) {	
+
+        	var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + query +  "&api_key=dc6zaTOxFJmzC&rating&limit=10";
+        	// console.log(query);
+
+			$.ajax({ url: queryURL, method: 'GET'})
+
+            .done(function(response) {
+
+            	var results = response.data;
+
+            	$('#gifs').empty();	
+
+            	for (var i = 0; i < results.length; i++) {
+            		
+                                
+        		console.log('button'  + " was clicked");
+        		console.log(queryURL);
+                               
+                var imageUrl = results[i].images.fixed_height_still.url;
+                
+
+                var animatedImage = results[i].images.fixed_height.url;
+                
+
+   				var rating = results[i].rating;
+
+                var p = $('<p>').text("Rating: " + rating);
+                 
+                var themeGif = $("<img>");
+
+                themeGif.attr('src', imageUrl);
+
+               
+              
+                var gifDiv = $('<div class="item">').append(p).append(themeGif);
+
+                $('#gifs').append(gifDiv);
+
+
+
+                };
+
+            });
+	}
+
 
 
        
